@@ -1,0 +1,18 @@
+package com.example.exercise.security;
+
+public enum Permission {
+    HELLO_WORLD_READ,
+    PRODUCT_BY_NAME,
+    PRODUCT_BY_PRICE,
+    PRODUCT_BY_LAUNCH_DATE,
+    PRODUCT_READ,
+    PRODUCT_READ_ALL,
+    PRODUCT_SAVE,
+    PRODUCT_UPDATE,
+    PRODUCT_DELETE,
+    PRODUCT_GENERATE,
+    USER_READ,
+    USER_READ_ALL,
+    USER_UPDATE,
+    USER_DELETE
+}
