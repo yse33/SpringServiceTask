@@ -14,5 +14,6 @@ public enum Permission {
     USER_READ,
     USER_READ_ALL,
     USER_UPDATE,
-    USER_DELETE
+    USER_DELETE,
+    USER_GRANT_PERMISSIONS
 }
