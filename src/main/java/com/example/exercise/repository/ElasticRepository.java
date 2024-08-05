@@ -16,6 +16,6 @@ public interface ElasticRepository extends ElasticsearchRepository<ProductElasti
     List<ProductElastic> findByLaunchDateBetween(LocalDate start, LocalDate end);
     @Query("{\"bool\": {\"filter\": {\"geo_distance\": {\"distance\": \"?2km\", \"coordinatesOfOrigin\": {\"lat\": ?0, \"lon\": ?1}}}}}")
     List<ProductElastic> findByCoordinatesOfOriginInRadius(double lat, double lon, double radius);
-    @Query("{\"query_string\": {\"query\": \"*?0*\"}}")
+    @Query("{\"query_string\": { \"query\": \"?0\" } }")
     List<ProductElastic> findByGeneralSearch(String query);
 }
