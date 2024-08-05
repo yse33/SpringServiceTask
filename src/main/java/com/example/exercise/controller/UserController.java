@@ -55,6 +55,15 @@ public class UserController {
             @PathVariable String id,
             @RequestBody PermissionDTO permissionDTO
             ) {
-        return ResponseEntity.ok(userService.grantPermissions(id, permissionDTO.getPermissions()));
+        return ResponseEntity.ok(userService.grantPermissions(id, permissionDTO));
+    }
+
+    @PostMapping("/revoke-permissions/{id}")
+    @PreAuthorize("hasAuthority('USER_REVOKE_PERMISSIONS')")
+    public ResponseEntity<UserDTO> revokePermissions(
+            @PathVariable String id,
+            @RequestBody PermissionDTO permissionDTO
+    ) {
+        return ResponseEntity.ok(userService.revokePermissions(id, permissionDTO));
     }
 }
