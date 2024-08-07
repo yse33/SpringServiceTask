@@ -1,6 +1,7 @@
 package com.example.exercise.model;
 
 import com.example.exercise.security.Permission;
+import lombok.Builder;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -10,12 +11,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Document(collection = "users")
 @TypeAlias("user")
+@Builder
 @Data
 public class User implements UserDetails {
     @Id
@@ -24,7 +25,7 @@ public class User implements UserDetails {
     private String password;
     private String firstName;
     private String surname;
-    private Set<Permission> permissions = new HashSet<>();
+    private Set<Permission> permissions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
