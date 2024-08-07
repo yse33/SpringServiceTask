@@ -2,6 +2,7 @@ package com.example.exercise.service;
 
 import com.example.exercise.DTO.PermissionDTO;
 import com.example.exercise.DTO.UserDTO;
+import com.example.exercise.DTO.UserUpdateDTO;
 import com.example.exercise.model.User;
 import com.example.exercise.repository.UserRepository;
 import com.example.exercise.security.Permission;
@@ -31,6 +32,7 @@ public class UserServiceTests {
 
     private User user;
     private User secondUser;
+    private UserUpdateDTO userUpdateDTO;
     private PermissionDTO permissionDTO;
 
     @BeforeEach
@@ -53,6 +55,11 @@ public class UserServiceTests {
 
         permissionDTO = PermissionDTO.builder()
                 .permissions(new ArrayList<>(List.of("USER_UPDATE")))
+                .build();
+
+        userUpdateDTO = UserUpdateDTO.builder()
+                .firstName("Second")
+                .surname("User")
                 .build();
     }
 
@@ -95,19 +102,19 @@ public class UserServiceTests {
         when(userRepository.findById(any(String.class))).thenReturn(java.util.Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        UserDTO userDTO = userService.update(secondUser, "id");
+        UserDTO userDTO = userService.update(userUpdateDTO, "id");
 
         assertThat(userDTO).isNotNull();
-        assertThat(userDTO.getUsername()).isEqualTo(secondUser.getUsername());
-        assertThat(userDTO.getFirstName()).isEqualTo(secondUser.getFirstName());
-        assertThat(userDTO.getSurname()).isEqualTo(secondUser.getSurname());
+        assertThat(userDTO.getUsername()).isEqualTo(user.getUsername());
+        assertThat(userDTO.getFirstName()).isEqualTo(userUpdateDTO.getFirstName());
+        assertThat(userDTO.getSurname()).isEqualTo(userUpdateDTO.getSurname());
     }
 
     @Test
     public void UserService_Update_ThrowsRuntimeException() {
         when(userRepository.findById(any(String.class))).thenReturn(java.util.Optional.empty());
 
-        assertThatThrownBy(() -> userService.update(secondUser, "id"))
+        assertThatThrownBy(() -> userService.update(userUpdateDTO, "id"))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("User not found");
     }

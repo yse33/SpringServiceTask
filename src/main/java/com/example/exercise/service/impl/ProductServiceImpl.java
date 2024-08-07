@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
                     .setScale(15, RoundingMode.UP).doubleValue();
 
             Product product = Product.builder()
-            .name("Product " + i + 1)
+            .name("Product " + (i + 1))
             .price(BigDecimal.valueOf(random.nextDouble(1000) + 1).setScale(2, RoundingMode.UP))
             .launchDate(LocalDate.ofEpochDay(random.nextInt(365 * 50) + 1))
             .coordinatesOfOrigin(new Point(lat, lon))

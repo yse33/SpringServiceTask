@@ -52,6 +52,8 @@ public class UserServiceImpl implements UserService {
                 () -> new RuntimeException("User not found")
         );
 
+        checkPermissions(permissionDTO);
+
         for (String permission : permissionDTO.getPermissions()) {
             if (!existingUser.getPermissions().contains(Permission.valueOf(permission))) {
                 existingUser.getPermissions().add(Permission.valueOf(permission));
@@ -69,6 +71,8 @@ public class UserServiceImpl implements UserService {
                 () -> new RuntimeException("User not found")
         );
 
+        checkPermissions(permissionDTO);
+
         for (String permission : permissionDTO.getPermissions()) {
             if (existingUser.getPermissions().contains(Permission.valueOf(permission))) {
                 existingUser.getPermissions().remove(Permission.valueOf(permission));
@@ -78,5 +82,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return USER_MAPPER.toUserDTO(userRepository.save(existingUser));
+    }
+
+    private void checkPermissions(PermissionDTO permissionDTO) {
+        for (String permission : permissionDTO.getPermissions()) {
+            try {
+                Permission.valueOf(permission);
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Permission '" + permission + "' does not exist");
+            }
+        }
     }
 }

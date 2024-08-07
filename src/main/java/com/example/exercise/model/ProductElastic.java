@@ -1,5 +1,6 @@
 package com.example.exercise.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Document(indexName = "products")
 @TypeAlias("product")
 @Data
+@Builder
 public class ProductElastic {
     @Id
     private String id;
