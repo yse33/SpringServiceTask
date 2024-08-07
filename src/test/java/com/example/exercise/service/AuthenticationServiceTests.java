@@ -21,7 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -57,7 +57,7 @@ public class AuthenticationServiceTests {
                 .password("password")
                 .firstName("James")
                 .surname("Bond")
-                .permissions(new HashSet<>())
+                .permissions(new ArrayList<>())
                 .build();
 
         registerDTO = UserRegisterDTO.builder()

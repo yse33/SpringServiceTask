@@ -1,10 +1,12 @@
 package com.example.exercise.DTO;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
+@Builder
 public class PermissionDTO {
-    private Set<String> permissions;
+    private List<String> permissions;
 }
