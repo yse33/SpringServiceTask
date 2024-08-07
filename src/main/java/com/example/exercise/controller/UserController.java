@@ -1,5 +1,6 @@
 package com.example.exercise.controller;
 
+import com.example.exercise.DTO.PermissionDTO;
 import com.example.exercise.DTO.UserDTO;
 import com.example.exercise.model.User;
 import com.example.exercise.service.UserService;
@@ -46,5 +47,23 @@ public class UserController {
     ) {
         userService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/grant-permissions/{id}")
+    @PreAuthorize("hasAuthority('USER_GRANT_PERMISSIONS')")
+    public ResponseEntity<UserDTO> grantPermissions(
+            @PathVariable String id,
+            @RequestBody PermissionDTO permissionDTO
+            ) {
+        return ResponseEntity.ok(userService.grantPermissions(id, permissionDTO));
+    }
+
+    @PostMapping("/revoke-permissions/{id}")
+    @PreAuthorize("hasAuthority('USER_REVOKE_PERMISSIONS')")
+    public ResponseEntity<UserDTO> revokePermissions(
+            @PathVariable String id,
+            @RequestBody PermissionDTO permissionDTO
+    ) {
+        return ResponseEntity.ok(userService.revokePermissions(id, permissionDTO));
     }
 }

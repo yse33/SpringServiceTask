@@ -4,6 +4,7 @@ import com.example.exercise.model.ProductElastic;
 import com.example.exercise.service.ElasticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -17,6 +18,7 @@ public class ElasticController {
     private final ElasticService elasticService;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_READ')")
     public ResponseEntity<ProductElastic> getProductById(
             @PathVariable String id
     ) {
@@ -24,11 +26,13 @@ public class ElasticController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_READ_ALL')")
     public ResponseEntity<List<ProductElastic>> getAllProducts() {
         return ResponseEntity.ok(elasticService.getAll());
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_SAVE')")
     public ResponseEntity<ProductElastic> saveProduct(
             @RequestBody ProductElastic product
     ) {
@@ -36,6 +40,7 @@ public class ElasticController {
     }
 
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_UPDATE')")
     public ResponseEntity<ProductElastic> updateProduct(
             @PathVariable String id,
             @RequestBody ProductElastic product
@@ -44,6 +49,7 @@ public class ElasticController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_DELETE')")
     public ResponseEntity<Void> deleteProduct(
             @PathVariable String id
     ) {
@@ -52,6 +58,7 @@ public class ElasticController {
     }
 
     @GetMapping("/name")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_BY_NAME')")
     public ResponseEntity<List<ProductElastic>> getProductsByName(
             @RequestParam String name
     ) {
@@ -59,6 +66,7 @@ public class ElasticController {
     }
 
     @GetMapping("/price")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_BY_PRICE')")
     public ResponseEntity<List<ProductElastic>> getProductsByPrice(
             @RequestParam Double min,
             @RequestParam Double max
@@ -67,6 +75,7 @@ public class ElasticController {
     }
 
     @GetMapping("/launch-date")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_BY_LAUNCH_DATE')")
     public ResponseEntity<List<ProductElastic>> getProductsByLaunchDate(
             @RequestParam String start,
             @RequestParam String end
@@ -75,6 +84,7 @@ public class ElasticController {
     }
 
     @GetMapping("/radius")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_BY_RADIUS')")
     public ResponseEntity<List<ProductElastic>> getProductsByRadius(
             @RequestParam double lat,
             @RequestParam double lon,
@@ -84,6 +94,7 @@ public class ElasticController {
     }
 
     @GetMapping("/general-search")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_BY_GENERAL_SEARCH')")
     public ResponseEntity<List<ProductElastic>> getProductsByGeneralSearch(
             @RequestParam String query
     ) {
@@ -91,6 +102,7 @@ public class ElasticController {
     }
 
     @PostMapping("/generate")
+    @PreAuthorize("hasAuthority('PRODUCT_ELASTIC_GENERATE')")
     public ResponseEntity<Void> generateRandomProducts(
             @RequestParam Integer count
     ) {
