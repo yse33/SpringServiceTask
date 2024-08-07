@@ -8,6 +8,7 @@ import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -71,11 +72,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void generateRandomProducts(int count) {
         for (int i = 0; i < count; i++) {
-            Product product = new Product();
-            product.setName("Product " + i);
-            product.setPrice(BigDecimal.valueOf(random.nextDouble(1000) + 1));
-            product.setLaunchDate(LocalDate.ofEpochDay(random.nextInt(365 * 50) + 1));
-            product.setCoordinatesOfOrigin(new Point(random.nextDouble(180), random.nextDouble(90)));
+            double lat = BigDecimal.valueOf(-90 + random.nextDouble(180))
+                    .setScale(15, RoundingMode.UP).doubleValue();
+            double lon = BigDecimal.valueOf(-180 + random.nextDouble(360))
+                    .setScale(15, RoundingMode.UP).doubleValue();
+
+            Product product = Product.builder()
+            .name("Product " + i + 1)
+            .price(BigDecimal.valueOf(random.nextDouble(1000) + 1).setScale(2, RoundingMode.UP))
+            .launchDate(LocalDate.ofEpochDay(random.nextInt(365 * 50) + 1))
+            .coordinatesOfOrigin(new Point(lat, lon))
+            .build();
+
             productRepository.save(product);
         }
     }

@@ -2,7 +2,7 @@ package com.example.exercise.controller;
 
 import com.example.exercise.DTO.PermissionDTO;
 import com.example.exercise.DTO.UserDTO;
-import com.example.exercise.model.User;
+import com.example.exercise.DTO.UserUpdateDTO;
 import com.example.exercise.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +35,9 @@ public class UserController {
     @PreAuthorize("hasAuthority('USER_UPDATE')")
     public ResponseEntity<UserDTO> updateUser(
             @PathVariable String id,
-            @RequestBody User user
+            @RequestBody UserUpdateDTO userUpdateDTO
     ) {
-        return ResponseEntity.ok(userService.update(user, id));
+        return ResponseEntity.ok(userService.update(userUpdateDTO, id));
     }
 
     @DeleteMapping("/delete/{id}")

@@ -1,8 +1,10 @@
 package com.example.exercise.model;
 
 import com.example.exercise.security.Permission;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -16,8 +18,10 @@ import java.util.stream.Collectors;
 
 @Document(collection = "users")
 @TypeAlias("user")
-@Builder
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     private ObjectId id;

@@ -2,6 +2,7 @@ package com.example.exercise.service.impl;
 
 import com.example.exercise.DTO.PermissionDTO;
 import com.example.exercise.DTO.UserDTO;
+import com.example.exercise.DTO.UserUpdateDTO;
 import com.example.exercise.model.User;
 import com.example.exercise.repository.UserRepository;
 import com.example.exercise.security.Permission;
@@ -29,15 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO update(User user, String id) {
+    public UserDTO update(UserUpdateDTO userUpdateDTO, String id) {
         User existingUser = userRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
 
-        existingUser.setUsername(user.getUsername());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setSurname(user.getSurname());
+        existingUser.setFirstName(userUpdateDTO.getFirstName());
+        existingUser.setSurname(userUpdateDTO.getSurname());
 
         return USER_MAPPER.toUserDTO(userRepository.save(existingUser));
     }
@@ -55,7 +54,6 @@ public class UserServiceImpl implements UserService {
 
         for (String permission : permissionDTO.getPermissions()) {
             if (!existingUser.getPermissions().contains(Permission.valueOf(permission))) {
-                System.out.println(existingUser.getPermissions());
                 existingUser.getPermissions().add(Permission.valueOf(permission));
             } else {
                 throw new RuntimeException("Permission '" + permission + "' already granted");
