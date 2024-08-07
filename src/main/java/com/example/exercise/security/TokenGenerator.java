@@ -3,7 +3,9 @@ package com.example.exercise.security;
 import com.example.exercise.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +17,15 @@ public class TokenGenerator {
     @Value("${jwt.token.expiration.time}")
     private long expirationTime;
 
-    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    @Value("${jwt.token.secret}")
+    private String secret;
+
+    private static Key key;
+
+    @PostConstruct
+    private void init() {
+        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+    }
 
     public String generateToken(User user) {
         String username = user.getUsername();
