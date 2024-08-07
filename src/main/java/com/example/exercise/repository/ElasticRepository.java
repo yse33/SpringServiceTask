@@ -2,6 +2,7 @@ package com.example.exercise.repository;
 
 import com.example.exercise.model.ProductElastic;
 import org.springframework.data.elasticsearch.annotations.Query;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ public interface ElasticRepository extends ElasticsearchRepository<ProductElasti
     List<ProductElastic> findByName(String name);
     List<ProductElastic> findByPriceBetween(BigDecimal min, BigDecimal max);
     List<ProductElastic> findByLaunchDateBetween(LocalDate start, LocalDate end);
+    List<ProductElastic> findByCoordinatesOfOrigin(GeoPoint coordinatesOfOrigin);
     @Query("{\"bool\": {\"filter\": {\"geo_distance\": {\"distance\": \"?2km\", \"coordinatesOfOrigin\": {\"lat\": ?0, \"lon\": ?1}}}}}")
     List<ProductElastic> findByCoordinatesOfOriginInRadius(double lat, double lon, double radius);
     @Query("{\"query_string\": { \"query\": \"?0\" } }")

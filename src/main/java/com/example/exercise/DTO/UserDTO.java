@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.bson.types.ObjectId;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -15,5 +15,5 @@ public class UserDTO {
     private String username;
     private String firstName;
     private String surname;
-    private Set<Permission> permissions;
+    private List<Permission> permissions;
 }

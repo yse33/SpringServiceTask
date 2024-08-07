@@ -16,7 +16,7 @@ public class IllegalArgumentExceptionAdvice extends ResponseEntityExceptionHandl
     @ExceptionHandler(value = IllegalArgumentException.class)
     protected ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException e, WebRequest request) {
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Permission with name '" + e.getMessage().split("\\.")[5] + "' does not exist");
+        response.put("message", e.getMessage());
         return handleExceptionInternal(e, response, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 

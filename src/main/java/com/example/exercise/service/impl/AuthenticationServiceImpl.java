@@ -18,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 import static com.example.exercise.mapper.UserMapper.USER_MAPPER;
 
 @Service
@@ -36,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         User user = USER_MAPPER.fromUserRegisterDTO(userRegisterDTO);
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+        user.setPermissions(new ArrayList<>());
         userRepository.save(user);
 
         UserResponseDTO userResponseDTO = USER_MAPPER.toUserResponseDTO(user);
